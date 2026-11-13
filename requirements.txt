@@ -1,0 +1,6 @@
+matplotlib
+pytest
+transformers
+torch
+datasets
+pystardog
