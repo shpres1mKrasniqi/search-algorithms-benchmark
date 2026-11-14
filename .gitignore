@@ -219,5 +219,5 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
-# local virtual environment
-search/
+# PyCharm / JetBrains IDE settings (personal to each machine, not project code)
+.idea/
