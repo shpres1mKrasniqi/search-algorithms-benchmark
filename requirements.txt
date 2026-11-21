@@ -4,3 +4,4 @@ transformers
 torch
 datasets
 pystardog
+python-dotenv
