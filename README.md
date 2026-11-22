@@ -257,3 +257,19 @@ which is ignored by Git.
    A result containing `'value': '0'` (an empty database) means it works.
 
 Use a dedicated Stardog user with access to this database only. Never commit `.env`.
+
+## Entity extraction (Hugging Face NER)
+
+`ner_extract.py` reads news articles from the public `fancyzhx/ag_news` dataset and
+extracts people (PER), organizations (ORG) and locations (LOC) with the pretrained model
+`dslim/bert-base-NER`. No model is trained. The first run downloads the model
+(about 400 MB) and the dataset into the local Hugging Face cache.
+
+```
+python ner_extract.py
+```
+
+Settings (model, dataset, number of articles, confidence threshold) have defaults in the
+code and can be overridden in `.env`; see `.env.example`. Entities with a confidence
+below 0.90, other types, or names that are very short or do not start with a letter or
+digit are dropped. Example result: 2,000 articles give about 2,150 unique (name, type) pairs.
