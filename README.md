@@ -231,3 +231,29 @@ The virtual environment is not active. Activate it (see Setup) and check that
 
 **`pip install` takes very long**
 `torch` is several hundred MB. This is normal on the first install.
+
+## Stardog configuration
+
+The knowledge graph part uses a Stardog Cloud database named `search-algorithms-benchmark`.
+Credentials are never stored in the repository. They are read from a local `.env` file,
+which is ignored by Git.
+
+1. Copy the example file:
+   ```
+   copy .env.example .env        (Windows)
+   cp .env.example .env          (macOS / Linux)
+   ```
+2. Fill in your own values in `.env`:
+   ```
+   STARDOG_ENDPOINT=https://<your-instance>.stardog.cloud:5820
+   STARDOG_DATABASE=search-algorithms-benchmark
+   STARDOG_USERNAME=<your Stardog user>
+   STARDOG_PASSWORD=<your password>
+   ```
+3. Test the connection:
+   ```
+   python check_stardog_connection.py
+   ```
+   A result containing `'value': '0'` (an empty database) means it works.
+
+Use a dedicated Stardog user with access to this database only. Never commit `.env`.
