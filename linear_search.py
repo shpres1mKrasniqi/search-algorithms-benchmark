@@ -1,4 +1,8 @@
 def linear_search(items, target, verbose=False):
+    """Search items from left to right and return (index, comparisons).
+
+    The input may be unsorted. The index is -1 when target is not found.
+    """
     comparisons = 0
 
     for index, value in enumerate(items):
