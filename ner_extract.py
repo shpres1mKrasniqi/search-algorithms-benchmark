@@ -1,3 +1,4 @@
+import csv
 import os
 
 from datasets import load_dataset
@@ -22,6 +23,7 @@ def load_articles(n=NUM_ARTICLES):
 
 def build_ner_pipeline():
     return pipeline("ner", model=MODEL_NAME, aggregation_strategy="first")
+
 
 def filter_entities(raw_entities):
     found = set()
@@ -54,11 +56,27 @@ def extract_entities(articles, ner):
     return sorted(unique)
 
 
+def save_entities_csv(entities, path="data/entities.csv"):
+    """Write unique entity names and types to a CSV for the Stardog pipeline."""
+    directory = os.path.dirname(path)
+    if directory:
+        os.makedirs(directory, exist_ok=True)
+
+    with open(path, "w", newline="", encoding="utf-8") as file:
+        writer = csv.writer(file)
+        writer.writerow(["label", "type"])
+        writer.writerows(entities)
+
+    return path
+
+
 if __name__ == "__main__":
     articles = load_articles()
     ner = build_ner_pipeline()
     entities = extract_entities(articles, ner)
+    output_path = save_entities_csv(entities)
 
     print(f"\nFound {len(entities)} unique (name, type) pairs")
+    print(f"Saved entities to {output_path}")
     for name, entity_type in entities[:15]:
         print(f"{entity_type:4} {name}")
